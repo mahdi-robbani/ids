@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from plot import *
 
 def pca(data):
     '''Return an array of eigen vectors and eigenvalues for a long dataset'''
@@ -35,14 +36,12 @@ def mds(target, source, d):
     target = target.T #transpose to N*d matrix
     return target
 
-def mds_plot(data, save, d = 2):
+def mds_plot(data, title, save, d = 2):
     data = mds(data, data, d)
-    plt.scatter(data[:,0], data[:,1])
-    plt.axis('equal')
-    plt.xlabel('Principal Component 1')
-    plt.ylabel('Principal Component 2')
-    plt.title('Plot of toy dataset projected on first two principal components')
-    if save == False:
-        plt.show()
-    else:
-        plt.savefig("toy"+ str(len(data))+".png", dpi = 200)
+    plt.scatter(data[:,0], data[:,1], zorder = 2, ec = 'black')
+    plot_template(title = title,
+                 xlabel = "Principal Component 1",
+                 ylabel = "Principal Component 2",
+                 equal_axis = True, 
+                 legend = False,
+                 save = save)

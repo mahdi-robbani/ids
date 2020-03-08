@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[17]:
 
 
 # input: datamatrix as loaded by numpy.loadtxt('dataset.txt')
@@ -11,7 +11,7 @@
 # note: make sure the order of the eigenvalues (the projected variance) is decreasing, and the eigenvectors have the same order as their associated eigenvalues
 
 
-# In[2]:
+# In[18]:
 
 
 #Exercise 1a
@@ -28,13 +28,22 @@ def pca(data):
 
 def standardize_data(data):
     '''Transforms the data so that mean = 0 and sd = 1'''
+    data = center_data(data)
+    data = normalize_data(data)
+    return data
+
+def center_data(data):
     mean = np.mean(data, axis = 0)
+    data = data - mean
+    return data
+
+def normalize_data(data):
     sd = np.std(data, axis = 0)
-    data = (data - mean)/sd
+    data = data/sd
     return data
 
 
-# In[3]:
+# In[19]:
 
 
 #Exercise 1b
@@ -58,7 +67,7 @@ plt.ylabel('Principcal Component 2')
 plt.show()
 
 
-# In[4]:
+# In[20]:
 
 
 #Exercise 1c plot1
@@ -71,6 +80,7 @@ def min_dimensions(N, cum_variance):
 
 pesticide = np.loadtxt('IDSWeedCropTrain.csv', delimiter = ',')
 pesticide = pesticide[:,:-1]
+pesticide = center_data(pesticide)
 eigenvectors, eigenvalues = pca(pesticide)
 variance = eigenvalues/sum(eigenvalues)
 count = list(range(1, len(variance)+1))
@@ -82,7 +92,7 @@ plt.ylabel('Proportion of Variance Captured')
 plt.show()
 
 
-# In[5]:
+# In[21]:
 
 
 # Exercise 1c plot2
@@ -98,7 +108,7 @@ plt.ylabel('Proportion of Variance Captured')
 plt.show()
 
 
-# In[6]:
+# In[22]:
 
 
 # input:   1) datamatrix as loaded by numpy.loadtxt('dataset.txt')
@@ -107,7 +117,7 @@ plt.show()
 #
 
 
-# In[7]:
+# In[23]:
 
 
 # Exercise 2
@@ -128,7 +138,7 @@ plt.ylabel('Principcal Component 2')
 plt.show()
 
 
-# In[9]:
+# In[24]:
 
 
 #Exercise 3
@@ -176,6 +186,8 @@ def kmean(k, data):
         else:
             old_loss = new_loss
 
+pesticide = np.loadtxt('IDSWeedCropTrain.csv', delimiter = ',')
+pesticide = pesticide[:,:-1]
 centroids = kmean(2, pesticide)
 print(f"Centroid 1: {centroids[0]}")
 print(f"Centroid 2: {centroids[1]}")
