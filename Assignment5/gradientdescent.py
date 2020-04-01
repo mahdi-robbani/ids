@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[194]:
+# In[7]:
 
 
 # Exercise 6
@@ -48,14 +48,14 @@ def gradient_descent(x, learning_rate):
         elif iteration < 11:
             ax2.scatter(old_x, f(old_x), label = "Iter = " + str(iteration), color = 'C'+str(iteration), zorder = 3, ec ="black")
         elif iteration == 10000:
-            print("Max iterations reached")
+#             print("Max iterations reached")
             break
-        elif difference < tolerance:
-            print("Tolerance reached")
+        elif abs(m) < tolerance:
+#             print("Tolerance reached")
             break
-        elif np.isinf(m):
-            print("Infinite Gradient")
-            break
+#         elif np.isinf(m):
+#             print("Infinite Gradient")
+#             break
         
         old_x = new_x
         iteration += 1
@@ -72,20 +72,14 @@ def gradient_descent(x, learning_rate):
 #     fig.clf()
     plt.show()
     
-    old_y = f(old_x)
-    print(f"X value = {old_x}")
-    print(f"Y value = {old_y}")
-    print(f"Gradient = {m}")
-    print(f"Iteration = {iteration}")
+    new_y = f(new_x)
+#     print(f"X value = {new_x}")
+#     print(f"Y value = {new_y}")
+#     print(f"Gradient = {m}")
+#     print(f"Iteration = {iteration}")
     
-    return iteration, old_y
+    return iteration, new_y
 
 
-# In[195]:
 
 
-x = np.linspace(-1.5, 1.5, 100)
-rates = [0.1, 0.01, 0.001, 0.0001]
-
-for i in rates:
-    gradient_descent(x, i)
